@@ -27,6 +27,7 @@ async function checkAndCreateTable(dbClient: any) {
  * Main request handler to route requests based on URL.
  */
 const requestHandler = async (req: IncomingMessage, res: ServerResponse, dbClient: any) => {
+  
   // Add CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -34,7 +35,7 @@ const requestHandler = async (req: IncomingMessage, res: ServerResponse, dbClien
   
   // Handle preflight OPTIONS requests
   if (req.method === 'OPTIONS') {
-    res.writeHead(204); // No content
+    res.writeHead(204);
     res.end();
     return;
   }
