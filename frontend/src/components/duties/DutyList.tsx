@@ -1,19 +1,16 @@
 import React from 'react';
+import DutyCard from './DutyCard'; // Import the DutyCard component
 import { useDutyContext } from '../context/DutyContext';
+import './Duties.css'
 
-const DutyList: React.FC = () => {
-  const { duties, refreshDuties } = useDutyContext();
+const DutyList: React.FC<{ onEdit: (duty: any) => void; onDelete: (id: number) => void }> = ({ onEdit, onDelete }) => {
+  const { duties } = useDutyContext(); // Get duties from context
 
   return (
-    <div>
-      <button onClick={refreshDuties}>Refresh Duties</button>
-      <ul>
-        {duties.map((duty) => (
-          <li key={duty.id}>
-            {duty.title} - {duty.completed ? 'Completed' : 'Not completed'}
-          </li>
-        ))}
-      </ul>
+    <div className="duty-list">
+      {duties.map((duty: any) => (
+        <DutyCard key={duty.id} duty={duty} onEdit={onEdit} onDelete={onDelete} />
+      ))}
     </div>
   );
 };

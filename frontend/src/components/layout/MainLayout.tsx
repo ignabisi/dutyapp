@@ -1,79 +1,60 @@
 import React, { useState } from 'react';
-import { Layout, Card, Button, Modal, Form, Input, Checkbox } from 'antd';
+import { Layout, Button } from 'antd';
+import DutyList from '../duties/DutyList';
+import DutyModal from '../duties/DutyModal';
 import { useDutyContext } from '../context/DutyContext';
 
 const { Content } = Layout;
 
 const MainLayout: React.FC = () => {
-  const { duties, updateDuty, deleteDuty } = useDutyContext();
+  const { addDuty, updateDuty, refreshDuties, deleteDuty } = useDutyContext();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedDuty, setSelectedDuty] = useState<any>(null);
+  const [isEditing, setIsEditing] = useState(false);
 
   const showEditModal = (duty: any) => {
     setSelectedDuty(duty);
+    setIsEditing(true);
     setIsModalVisible(true);
   };
 
-  const handleOk = (values: any) => {
-    updateDuty({ ...selectedDuty, ...values });
-    setIsModalVisible(false);
+  const showAddModal = () => {
+    setSelectedDuty(null);
+    setIsEditing(false);
+    setIsModalVisible(true);
   };
 
-  const handleCancel = () => {
+  const handleOk = async (values: any) => {
+    if (isEditing) {
+      await updateDuty({ ...selectedDuty, ...values });
+    } else {
+      await addDuty({ title: values.title, completed: values.completed || false });
+    }
     setIsModalVisible(false);
     setSelectedDuty(null);
+    await refreshDuties();
   };
 
-  const handleDelete = (id: number) => {
-    deleteDuty(id);
+  const handleDelete = async (id: number) => {
+    await deleteDuty(id);
+    await refreshDuties();
   };
 
   return (
     <Content style={{ padding: '0 50px', marginTop: '20px' }}>
       <div className="site-layout-content">
-        <h2>Duty List</h2>
-        <div className="duty-list">
-          {duties.map((duty: any) => (
-            <Card key={duty.id} title={duty.title} style={{ marginBottom: '20px' }}>
-              <p>Status: {duty.completed ? 'Completed' : 'Pending'}</p>
-              <Button type="primary" onClick={() => showEditModal(duty)}>Edit</Button>
-              <Button type="dashed" onClick={() => handleDelete(duty.id)} style={{ marginLeft: '10px' }}>
-                Delete
-              </Button>
-            </Card>
-          ))}
-        </div>
-        {/* Modal for editing a duty */}
-        {selectedDuty && (
-          <Modal
-            title="Edit Duty"
-            visible={isModalVisible}
-            onCancel={handleCancel}
-            footer={null}
-          >
-            <Form
-              initialValues={{
-                title: selectedDuty.title,
-                completed: selectedDuty.completed,
-              }}
-              onFinish={handleOk}
-            >
-              <Form.Item
-                name="title"
-                label="Title"
-                rules={[{ required: true, message: 'Please enter a title!' }]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item name="completed" valuePropName="checked">
-                <Checkbox>Completed</Checkbox>
-              </Form.Item>
-              <Form.Item>
-                <Button type="primary" htmlType="submit">Save</Button>
-              </Form.Item>
-            </Form>
-          </Modal>
-        )}
+        <h2 className="duty-list-title">Duty List</h2>
+        <DutyList onEdit={showEditModal} onDelete={handleDelete} />
+        <Button type="primary" onClick={showAddModal} style={{ marginBottom: '10px', marginTop: '20px' }}>
+          Add New Duty
+        </Button>
+        <DutyModal
+          visible={isModalVisible}
+          isEditing={isEditing}
+          selectedDuty={selectedDuty}
+          onCancel={() => setIsModalVisible(false)}
+          onSubmit={handleOk}
+        />
       </div>
     </Content>
   );
