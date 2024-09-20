@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "@types/node": "^22.5.5",
+    "antd": "^5.20.6",
+    "axios": "^1.7.7",
     "dotenv": "^16.4.5",
     "pg": "^8.13.0",
     "ts-node": "^10.9.2",
