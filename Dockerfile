@@ -22,5 +22,4 @@ RUN apk del python3 make gcc g++ libffi-dev musl-dev
 
 EXPOSE 3000
 
-# TODO
 CMD ["npx", "ts-node", "src/server.ts"]
