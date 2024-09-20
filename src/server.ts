@@ -27,6 +27,18 @@ async function checkAndCreateTable(dbClient: any) {
  * Main request handler to route requests based on URL.
  */
 const requestHandler = async (req: IncomingMessage, res: ServerResponse, dbClient: any) => {
+  // Add CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  
+  // Handle preflight OPTIONS requests
+  if (req.method === 'OPTIONS') {
+    res.writeHead(204); // No content
+    res.end();
+    return;
+  }
+
   const { url } = req;
 
   if (url?.startsWith('/duties')) {
@@ -40,10 +52,10 @@ const requestHandler = async (req: IncomingMessage, res: ServerResponse, dbClien
 /**
  * Create and start the server with the provided database client.
  */
-export const createServer = (dbClient: any, port: number = 3000) => {
+export const createServer = (dbClient: any, port: number = 3002) => {
   return new Promise((resolve, reject) => {
     const server = http.createServer(requestLogger(async (req, res) => {
-      await requestHandler(req, res, dbClient); // Paso el requestHandler dentro del requestLogger
+      await requestHandler(req, res, dbClient);
     }));
 
     server.listen(port, async () => {
