@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - DB_USER=secret
+      - DB_PASSWORD=secret
+      - DB_NAME=dutydb
+      - NODE_ENV=live
+    volumes:
+      - .:/usr/src/app 
+      - /usr/src/app/node_modules 
+    command: npx nodemon src/server.ts
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: secret
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: dutydb
+    ports:
+      - "5432:5432"
