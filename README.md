@@ -70,7 +70,6 @@ http://localhost:3002
 
 - Database: PostgreSQL
 - Testing: Jest for both frontend and backend testing
-- ESLint for both React (frontend) and Node.js (backend)
 
 By utilizing Docker, the application is containerized for easy deployment and environment management.
 
