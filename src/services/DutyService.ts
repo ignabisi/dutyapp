@@ -39,15 +39,15 @@ export class DutyService {
     }
   }
 
-  async update(id: number, title: string): Promise<void> {
+  async update(id: number, title: string, completed: boolean): Promise<void> {
     try {
-      await this.client.query('UPDATE duties SET title = $1 WHERE id = $2', [title, id]);
+      await this.client.query('UPDATE duties SET title = $1, completed = $2 WHERE id = $3', [title, completed, id]);
     } catch (error) {
       console.error(`Error updating duty with id ${id}:`, error);
       throw new Error('Database error');
     }
   }
-
+  
   async delete(id: number): Promise<void> {
     try {
       await this.client.query('DELETE FROM duties WHERE id = $1', [id]);

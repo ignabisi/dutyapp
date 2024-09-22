@@ -48,8 +48,8 @@ const updateDuty = async (req: IncomingMessage, dutyService: DutyService, id: nu
   });
   req.on('end', async () => {
     try {
-      const { title } = JSON.parse(body);
-      await dutyService.update(id, title);
+      const { title, completed } = JSON.parse(body);
+      await dutyService.update(id, title, completed);
       res.writeHead(200);
       res.end();
     } catch (error) {
