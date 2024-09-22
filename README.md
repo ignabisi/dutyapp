@@ -75,7 +75,13 @@ By utilizing Docker, the application is containerized for easy deployment and en
 
 ### Final Tip
 
-Don't forget to shut down the database when you're done—call bash stop-db.sh. After all, databases deserve some rest too, even in detached mode! 😄
+Don't forget to shut down the database when you're done, call
+
+```bash
+bash stop-db.sh
+```
+
+After all, databases deserve some rest too, even in detached mode! 😄
 
 
 ### Screenshots
