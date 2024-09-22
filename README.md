@@ -56,13 +56,43 @@ To test the application, simply run:
 ```
 
 ### Project Structure and Tools
-- Frontend: React with TypeScript, running on port 3000
+- Frontend: React with TypeScript and Ant Design, running on port 3003
+
+```bash
+http://localhost:3003
+```
+
 - Backend: Node.js with TypeScript, running on port 3002
+
+```bash
+http://localhost:3002
+```
+
 - Database: PostgreSQL
 - Testing: Jest for both frontend and backend testing
+- ESLint for both React (frontend) and Node.js (backend)
 
 By utilizing Docker, the application is containerized for easy deployment and environment management.
 
-### Final Tip:
+### Final Tip
 
 Don't forget to shut down the database when you're done—call bash stop-db.sh. After all, databases deserve some rest too, even in detached mode! 😄
+
+
+### Screenshots
+
+#### Empty Duty List
+
+![alt text](image.png)
+
+#### Add Duty with Form Validation
+
+![alt text](image-1.png)
+
+#### Duty Created
+
+![alt text](image-2.png)
+
+#### Update Duty
+
+![alt text](image-4.png)
