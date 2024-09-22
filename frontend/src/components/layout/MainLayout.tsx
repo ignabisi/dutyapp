@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout, Button } from 'antd';
 import DutyList from '../duties/DutyList';
 import DutyModal from '../duties/DutyModal';
@@ -13,9 +13,10 @@ const MainLayout: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
 
   const showEditModal = (duty: any) => {
-    setSelectedDuty(duty);
-    setIsEditing(true);
-    setIsModalVisible(true);
+    setIsModalVisible(false);
+      setSelectedDuty(duty);
+      setIsEditing(true);
+      setIsModalVisible(true);
   };
 
   const showAddModal = () => {
@@ -45,7 +46,12 @@ const MainLayout: React.FC = () => {
       <div className="site-layout-content">
         <h2 className="duty-list-title">Duty List</h2>
         <DutyList onEdit={showEditModal} onDelete={handleDelete} />
-        <Button type="primary" onClick={showAddModal} style={{ marginBottom: '10px', marginTop: '20px' }} aria-label="add-new-duty">
+        <Button
+          type="primary"
+          onClick={showAddModal}
+          style={{ marginBottom: '10px', marginTop: '20px' }}
+          aria-label="add-new-duty"
+        >
           Add New Duty
         </Button>
         <DutyModal

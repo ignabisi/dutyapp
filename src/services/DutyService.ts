@@ -39,15 +39,36 @@ export class DutyService {
     }
   }
 
-  async update(id: number, title: string, completed: boolean): Promise<void> {
+  async update(id: number, title?: string, completed?: boolean): Promise<void> {
     try {
-      await this.client.query('UPDATE duties SET title = $1, completed = $2 WHERE id = $3', [title, completed, id]);
+      const updates = [];
+      const values: any[] = [];
+  
+      if (title !== undefined) {
+        updates.push('title = $' + (values.length + 1));
+        values.push(title);
+      }
+  
+      if (completed !== undefined) {
+        updates.push('completed = $' + (values.length + 1));
+        values.push(completed);
+      }
+  
+      if (updates.length === 0) {
+        throw new Error('No fields to update');
+      }
+      console.log("ASDADASDSA")
+      console.log(updates)
+      const query = `UPDATE duties SET ${updates.join(', ')} WHERE id = ${id}`;
+      console.log(query)
+      console.log(values)
+      await this.client.query(query, values);
     } catch (error) {
       console.error(`Error updating duty with id ${id}:`, error);
       throw new Error('Database error');
     }
   }
-  
+
   async delete(id: number): Promise<void> {
     try {
       await this.client.query('DELETE FROM duties WHERE id = $1', [id]);
