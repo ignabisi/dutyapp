@@ -17,4 +17,4 @@ cd frontend || exit
 
 # Run frontend tests with yarn
 echo "Running frontend tests..."
-yarn test --verbose --detectOpenHandles
+yarn test --watchAll=false
