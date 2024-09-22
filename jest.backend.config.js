@@ -5,5 +5,8 @@ module.exports = {
     "^.+.tsx?$": ["ts-jest",{}],
   },
   verbose: true,
-  detectOpenHandles: true
+  detectOpenHandles: true,
+  testPathIgnorePatterns: [
+    "<rootDir>/frontend/"
+  ],
 };

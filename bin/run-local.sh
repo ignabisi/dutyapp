@@ -4,4 +4,4 @@
 cd "$(dirname "$0")/.." || exit
 
 # Start the application
-docker-compose up app
+docker-compose up app frontend

@@ -1,10 +1,10 @@
 import React from 'react';
-import DutyCard from './DutyCard'; // Import the DutyCard component
+import DutyCard from './DutyCard';
 import { useDutyContext } from '../context/DutyContext';
 import './Duties.css'
 
 const DutyList: React.FC<{ onEdit: (duty: any) => void; onDelete: (id: number) => void }> = ({ onEdit, onDelete }) => {
-  const { duties } = useDutyContext(); // Get duties from context
+  const { duties } = useDutyContext();
 
   return (
     <div className="duty-list">

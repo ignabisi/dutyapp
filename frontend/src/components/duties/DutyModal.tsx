@@ -3,16 +3,16 @@ import { Modal, Form, Input, Checkbox, Button } from 'antd';
 import './Duties.css'
 
 const DutyModal: React.FC<{
-  visible: boolean;
+  open: boolean;
   isEditing: boolean;
   selectedDuty: any;
   onCancel: () => void;
   onSubmit: (values: any) => void;
-}> = ({ visible, isEditing, selectedDuty, onCancel, onSubmit }) => {
+}> = ({ open, isEditing, selectedDuty, onCancel, onSubmit }) => {
   return (
     <Modal
       title={isEditing ? 'Edit Duty' : 'Add Duty'}
-      visible={visible}
+      open={open}
       onCancel={onCancel}
       footer={null}
     >

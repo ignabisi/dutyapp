@@ -45,11 +45,11 @@ const MainLayout: React.FC = () => {
       <div className="site-layout-content">
         <h2 className="duty-list-title">Duty List</h2>
         <DutyList onEdit={showEditModal} onDelete={handleDelete} />
-        <Button type="primary" onClick={showAddModal} style={{ marginBottom: '10px', marginTop: '20px' }}>
+        <Button type="primary" onClick={showAddModal} style={{ marginBottom: '10px', marginTop: '20px' }} aria-label="add-new-duty">
           Add New Duty
         </Button>
         <DutyModal
-          visible={isModalVisible}
+          open={isModalVisible}
           isEditing={isEditing}
           selectedDuty={selectedDuty}
           onCancel={() => setIsModalVisible(false)}

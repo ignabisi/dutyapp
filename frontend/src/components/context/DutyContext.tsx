@@ -16,6 +16,9 @@ interface DutyContextType {
 }
 
 const DutyContext = createContext<DutyContextType | undefined>(undefined);
+const apiHostname = process.env.API_HOSTNAME || 'localhost';
+const apiPort = process.env.PORT || '3002';
+
 
 export const useDutyContext = () => {
   const context = useContext(DutyContext);
@@ -27,11 +30,9 @@ export const useDutyContext = () => {
 
 export const DutyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [duties, setDuties] = useState<Duty[]>([]);
-
-  // Function to fetch duties from the backend
   const fetchDuties = async () => {
     try {
-      const response = await axios.get<Duty[]>('http://localhost:3002/duties');
+      const response = await axios.get<Duty[]>(`http://${apiHostname}:${apiPort}/duties`);
       setDuties(response.data);
     } catch (error) {
       console.error('Error fetching duties:', error);
@@ -41,17 +42,16 @@ export const DutyProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   // Function to add a new duty
   const addDuty = async (newDuty: Omit<Duty, 'id'>) => {
     try {
-      const response = await axios.post<Duty>('http://localhost:3002/duties', newDuty);
+      const response = await axios.post<Duty>(`http://${apiHostname}:${apiPort}/duties`, newDuty);
       setDuties((prevDuties) => [...prevDuties, response.data]);
     } catch (error) {
       console.error('Error adding duty:', error);
     }
   };
 
-  // Function to update a duty
   const updateDuty = async (updatedDuty: Duty) => {
     try {
-      await axios.put(`http://localhost:3002/duties/${updatedDuty.id}`, updatedDuty);
+      await axios.put(`http://${apiHostname}:${apiPort}/duties/${updatedDuty.id}`, updatedDuty);
       setDuties((prevDuties) =>
         prevDuties.map((duty) => (duty.id === updatedDuty.id ? updatedDuty : duty))
       );
@@ -60,10 +60,9 @@ export const DutyProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
-  // Function to delete a duty
   const deleteDuty = async (id: number) => {
     try {
-      await axios.delete(`http://localhost:3002/duties/${id}`);
+      await axios.delete(`http://${apiHostname}:${apiPort}/duties/${id}`);
       setDuties((prevDuties) => prevDuties.filter((duty) => duty.id !== id));
     } catch (error) {
       console.error('Error deleting duty:', error);

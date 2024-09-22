@@ -2,7 +2,8 @@ version: '3.8'
 
 services:
   app:
-    build: .
+    build:
+      context: .
     ports:
       - "3002:3002"
     depends_on:
@@ -25,3 +26,15 @@ services:
       POSTGRES_DB: dutydb
     ports:
       - "5432:5432"
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3003:3003"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    command: yarn start
