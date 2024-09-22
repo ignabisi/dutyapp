@@ -10,7 +10,7 @@ To run the project, you need the following tools:
 
 - **Ubuntu 22.04** (WSL2 on Windows is supported)
 - **Docker** and **Docker Compose** for containerization
-- **Node.js 16** (for local development)
+- **Node.js 16**
 
 ## How to Set Up
 
