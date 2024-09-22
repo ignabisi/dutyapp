@@ -82,16 +82,16 @@ Don't forget to shut down the database when you're done—call bash stop-db.sh. 
 
 #### Empty Duty List
 
-![alt text](image.png)
+![alt text](/etc/documentation/image.png)
 
 #### Add Duty with Form Validation
 
-![alt text](image-1.png)
+![alt text](/etc/documentation/image-1.png)
 
 #### Duty Created
 
-![alt text](image-2.png)
+![alt text](/etc/documentation/image-2.png)
 
 #### Update Duty
 
-![alt text](image-4.png)
+![alt text](/etc/documentation/image-4.png)
