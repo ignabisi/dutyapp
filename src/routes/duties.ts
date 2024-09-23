@@ -2,7 +2,16 @@ import { IncomingMessage, ServerResponse } from 'http';
 import { DutyService } from '../services/DutyService';
 
 /**
- * Handle GET requests for all duties.
+ * Handle GET requests to retrieve all duties.
+ * @param dutyService - The service handling duty operations.
+ * @param res - The server response object to send back the results.
+ * @returns {void} Responds with a JSON array of duties or an error message.
+ * 
+ * - URL: `/duties`
+ * - Method: GET
+ * - Response:
+ *    - 200: Success, returns the list of duties in JSON format.
+ *    - 500: Internal Server Error, returns an error message in JSON format.
  */
 const getDuties = async (dutyService: DutyService, res: ServerResponse) => {
   try {
@@ -17,7 +26,19 @@ const getDuties = async (dutyService: DutyService, res: ServerResponse) => {
 };
 
 /**
- * Handle POST requests to create a duty.
+ * Handle POST requests to create a new duty.
+ * @param req - The incoming request containing the duty details in the body.
+ * @param dutyService - The service handling duty creation.
+ * @param res - The server response object to send back the results.
+ * @returns {void} Responds with the created duty ID or an error message.
+ * 
+ * - URL: `/duties`
+ * - Method: POST
+ * - Body Parameters: 
+ *    - title: string - The title of the duty to create.
+ * - Response:
+ *    - 201: Created, returns the new duty ID in JSON format.
+ *    - 500: Bad Request, returns an error message in JSON format if invalid data is provided.
  */
 const createDuty = async (req: IncomingMessage, dutyService: DutyService, res: ServerResponse) => {
   let body = '';
@@ -39,7 +60,21 @@ const createDuty = async (req: IncomingMessage, dutyService: DutyService, res: S
 };
 
 /**
- * Handle PUT requests to update a duty by ID.
+ * Handle PUT requests to update an existing duty by ID.
+ * @param req - The incoming request containing updated duty data in the body.
+ * @param dutyService - The service handling duty updates.
+ * @param id - The ID of the duty to update.
+ * @param res - The server response object to send back the results.
+ * @returns {void} Responds with a success message or an error message.
+ * 
+ * - URL: `/duties/:id`
+ * - Method: PUT
+ * - Body Parameters:
+ *    - title: string - The updated title of the duty.
+ *    - completed: boolean - Whether the duty is completed.
+ * - Response:
+ *    - 200: Success, duty is updated.
+ *    - 400: Bad Request, returns an error message if invalid data is provided.
  */
 const updateDuty = async (req: IncomingMessage, dutyService: DutyService, id: number, res: ServerResponse) => {
   let body = '';
@@ -61,7 +96,17 @@ const updateDuty = async (req: IncomingMessage, dutyService: DutyService, id: nu
 };
 
 /**
- * Handle DELETE requests to delete a duty by ID.
+ * Handle DELETE requests to remove a duty by ID.
+ * @param dutyService - The service handling duty deletion.
+ * @param id - The ID of the duty to delete.
+ * @param res - The server response object to send back the results.
+ * @returns {void} Responds with a success message or an error message.
+ * 
+ * - URL: `/duties/:id`
+ * - Method: DELETE
+ * - Response:
+ *    - 204: No Content, duty is successfully deleted.
+ *    - 500: Internal Server Error, returns an error message if deletion fails.
  */
 const deleteDuty = async (dutyService: DutyService, id: number, res: ServerResponse) => {
   try {
@@ -77,9 +122,10 @@ const deleteDuty = async (dutyService: DutyService, id: number, res: ServerRespo
 
 /**
  * Main request handler for duties.
- * @param req - HTTP request.
- * @param res - HTTP response.
- * @param dbClient - The database client to use.
+ * @param req - The incoming HTTP request.
+ * @param res - The server response object to send back the results.
+ * @param dbClient - The database client used by the DutyService.
+ * @returns {void} Routes requests based on method and URL path, handling different CRUD operations for duties.
  */
 export const handleDuties = async (req: IncomingMessage, res: ServerResponse, dbClient: any) => {
   const dutyService = new DutyService(dbClient); // Instantiate DutyService with the passed DB client
